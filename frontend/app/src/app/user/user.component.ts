@@ -127,7 +127,7 @@ export class UserComponent implements OnInit {
           if (data.password == this.loginForm.value.password){
             this.successlogin = true;
             this.alert2 = "success";
-            this.loginmsg = "Successsfully LoggedIn";
+            this.loginmsg = "Ingreso Satisfactorio";
 
             sessionStorage.setItem("username", this.loginForm.value.username);
             this.check = this.loginForm.value.username;
