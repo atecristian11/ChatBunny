@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+
+
+<head>
+  <meta charset="utf-8">
+  <title>LOVE BUNNY</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="assets/bootstrap.min.css">
+
+  <div class="body"></div>
+
+</head>
+
+<body>
+  <app-root></app-root>
+  <div class="container-fluid" style="visibility: hidden;">
+  <script>
+
+    function cambiarTrack(track) {
+      var value = track.getAttribute("value");
+      viejo_audio = document.getElementById("reproductor");
+      audio_padre = viejo_audio.parentNode;
+      audio_padre.removeChild(viejo_audio);
+      nuevo_audio = document.createElement("audio");
+      nuevo_audio.setAttribute("id", "reproductor");
+      nuevo_audio.setAttribute("controls", "controls");
+      nuevo_audio.setAttribute("autoplay", "autoplay");
+      source = document.createElement("source");
+      source.setAttribute("src", value);
+      source.setAttribute("type", "audio/mp3");
+      source.setAttribute("id", "reproductorSource");
+      nuevo_audio.appendChild(source);
+      audio_padre.appendChild(nuevo_audio);
+    }
+
+    function cargarReproductor() {
+      var select = document.getElementById("selectTrack");
+      var value = select.options[0].getAttribute("value");
+      nuevo_audio = document.createElement("audio");
+      nuevo_audio.setAttribute("id", "reproductor");
+      nuevo_audio.setAttribute("controls", "controls");
+      nuevo_audio.setAttribute("autoplay", "autoplay");
+      source = document.createElement("source");
+      source.setAttribute("src", value);
+      source.setAttribute("type", "audio/mpeg");
+      source.setAttribute("id", "reproductorSource");
+      nuevo_audio.appendChild(source);
+      padre = document.getElementById("reproductorBox");
+      padre.appendChild(nuevo_audio);
+    }
+  </script>
+  <br>
+  <br>
+  <div id="reproductorBox"></div>
+  <select
+    id="selectTrack"
+    multiple
+    onchange="cambiarTrack(this.options[this.selectedIndex]);" 
+  >
+    <option value="./assets/Music/Track sencillo.mp3">Soundtrack sencillo</option>
+    <option value="./assets/Music/Levitating Featuring DaBaby.mp3" style="display: none;">Levitating Featuring DaBaby - Dua Lipa</option>
+    <option value="./assets/Music/Mi vida eres tu.mp3" style="display: none;">Mi vida eres tu - Sonyk El Dragon</option>
+    <option value="./assets/Music/Earned.mp3" style="display: none;">Earned It - The Weekend</option>
+    <option value="./assets/Music/DieForYou.mp3" style="display: none;">Die For You - The Weekend</option>
+    <option value="./assets/Music/NoSeVa.mp3" style="display: none;">No Se Va - Morat</option>
+    <option value="./assets/Music/HappyTogether.mp3" style="display: none;">Happy Together - The Turtles</option>
+  </select>
+  
+  <script>
+    cargarReproductor();
+  </script>
+</div>
+
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+  </script>
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/6161add08b.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

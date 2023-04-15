@@ -1,0 +1,14 @@
+.feild {
+    font-size: 14px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    color:rgb(150, 7, 185);
+    background-color: rgb(237, 226, 238);
+    background-image: url(conejos-fondo-inicio.jpg);
+}
+

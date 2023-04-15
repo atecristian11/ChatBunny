@@ -1,0 +1,136 @@
+<div>
+  <nav class="navbar navbar-expand-lg  navbar navbar-light" style="background-color: #eec4e8;">
+    <a class="navbar-brand ml-sm-5" href="#" style="font-family:'Comic Sans MS';">CHAT LOVE BUNNY</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#" style="font-family:'Comic Sans MS';">INICIO <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav mr-auto">
+        <li>
+          
+          <select
+            class="selectAltura"
+            style="background-color: #eec4e8;"
+            id="selectTrack"
+            multiple
+            onchange="cambiarTrack(this.options[this.selectedIndex]);" 
+          >
+            <option value="./assets/Music/Track sencillo.mp3">Soundtrack sencillo</option>
+            <option value="./assets/Music/Levitating Featuring DaBaby.mp3">Levitating Featuring DaBaby - Dua Lipa</option>
+            <option value="./assets/Music/Mi vida eres tu.mp3">Mi vida eres tu - Sonyk El Dragon</option>
+            <option value="./assets/Music/Earned.mp3">Earned It - The Weekend</option>
+            <option value="./assets/Music/DieForYou.mp3">Die For You - The Weekend</option>
+            <option value="./assets/Music/NoSeVa.mp3">No Se Va - Morat</option>
+            <option value="./assets/Music/HappyTogether.mp3">Happy Together - The Turtles</option>
+          </select>
+        </li>
+      </ul>
+
+      <form class="form-inline my-2 my-lg-0">
+        <span *ngIf="loggedOut">
+          <button class="btn btn-primary mr-sm-5 my-2 my-sm-0" type="submit" data-toggle="modal"
+            data-target="#exampleModalCenter" style="font-family:'Comic Sans MS'; background-color: rgb(233, 89, 197);" (click)="limpMsg()">REGISTRARSE</button>
+
+          <button class="btn btn-success mr-sm-5 my-2 my-sm-0" type="submit" data-toggle="modal"
+            data-target="#exampleModalCenter2" (click)="limpMsg()">LOGIN</button>
+        </span>
+
+        <span *ngIf="loggedIn">
+          <button class="btn btn-success mr-sm-5 my-2 my-sm-0" type="submit" routerLink="chat" *ngIf="chatbox">Mis
+            Chats</button>
+          <button class="btn btn-danger mr-sm-5 my-2 my-sm-0" type="submit" (click)="logout()">SALIR</button>
+        </span>
+      </form>
+    </div>
+  </nav>
+</div>
+<!-- Modal para el registro -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">INGRESE NOMBRE DE USUARIO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- ========================= -->
+        <form [formGroup]="registerForm">
+          <label>Nombre Usuario *</label>
+          <div class="form-group text-center">
+            <input type="text" class="form-control" formControlName="username" id="exampleInputEmail1"
+              aria-describedby="emailHelp">
+          </div>
+          <label>Contraseña *</label>
+          <div class="form-group text-center">
+            <input type="password" class="form-control" formControlName="password" id="password1" aria-describedby="emailHelp">
+          </div>
+          <label>Hobbie *</label>
+          <div class="form-group text-center">
+            <input type="text" class="form-control" formControlName="hobbie" id="hobbie1" aria-describedby="emailHelp">
+          </div>
+          <div class="text-center">
+            <button type="submit" (click)="adduser()" class="btn btn-primary btn-sm" style="font-family:'Comic Sans MS'; background-color: blueviolet;">Registrar Usuario</button>
+          </div>
+          <div class="text-center mt-3">
+            <div class="small alert alert-{{alert}} feild" role="alert" *ngIf="successregister == true" style="color: black; ">{{registermsg}}
+            </div>
+            <div class="small alert alert-{{alert}} feild" role="alert" style="color: red;" *ngIf="successregister == false">{{registermsg}}
+            </div>
+          </div>
+        </form>
+        <!-- ========================= -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para el ingreso -->
+
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">INGRESE NOMBRE DE USUARIO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- ========================= -->
+        <form [formGroup]="loginForm">
+          <label>Nombre Usuario</label>
+          <div class="form-group text-center">
+            <input type="text" class="form-control" formControlName="username" id="exampleInputEmail2"
+              aria-describedby="emailHelp">
+          </div>
+          <label>Contraseña</label>
+          <div class="form-group text-center">
+            <input type="password" class="form-control" formControlName="password" id="password1" aria-describedby="emailHelp">
+          </div>
+          <div class="text-center">
+            <button type="submit" (click)="login()" class="btn btn-primary btn-sm" style="background-color: blueviolet;" >ENTRAR</button>
+          </div>
+          <div class="text-center mt-3">
+            <div class="small alert alert-{{alert2}} feild" role="alert" style="color: black;" *ngIf="successlogin == true">{{loginmsg}}
+            </div>
+            <div class="small alert alert-{{alert2}} feild" role="alert" style="color: red;" *ngIf="successlogin == false">{{loginmsg}}
+            </div>
+          </div>
+        </form>
+        <!-- ========================= -->
+      </div>
+    </div>
+  </div>
+</div>

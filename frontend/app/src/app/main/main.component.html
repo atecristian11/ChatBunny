@@ -1,0 +1,17 @@
+
+<div class="container">
+  <div class="text-center mt-5">
+    <h3 style="font-family:'Comic Sans MS';">Todos los usuario registrados en LOVE BUNNY</h3>
+  </div>
+    <img src="banner2.jpg">
+  <div class="row mt-5">
+    <div *ngFor="let presentation of alluser" class="user col-2" (click)="goToChat(presentation.userName)">
+      <div *ngIf="presentation.userName != check">
+        {{presentation.userName}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
