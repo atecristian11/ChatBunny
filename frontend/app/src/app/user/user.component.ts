@@ -112,6 +112,86 @@ export class UserComponent implements OnInit {
 
   }
 
+  editUser() {
+    if(this.registerForm.value.username == "" || this.registerForm.value.password == "" || this.registerForm.value.hobbie == ""){
+      this.successregister = false;
+      this.alert = "success";
+      this.registermsg = "Por favor ingrese todos los datos.";
+    }
+
+    if (this.registerForm.valid) {
+      this.userObj.userName = this.registerForm.value.username;
+      this.userObj.password = this.registerForm.value.password;
+      this.userObj.hobbie = this.registerForm.value.hobbie;
+      
+      this.userService.adduser(this.userObj).subscribe(
+        (data: any) => {
+          console.log(data);
+
+          this.successregister = true;
+          this.alert = "success";
+          this.registermsg = "Usuario registrado satisfactoriamente.";
+
+          this.registerForm.reset();
+        },
+        (error) => {
+          console.log(error.error);
+          if (error.status == 409) {
+            this.successregister = true;
+            this.alert = "danger";
+            this.registermsg = "Este usuario ya existe por favor ingresar otro."
+          } else {
+            this.successregister = true;
+            this.alert = "danger";
+            this.registermsg = "Error"
+          }
+
+        }
+      )
+    }
+
+  }
+
+  deleteUser() {
+    if(this.registerForm.value.username == "" || this.registerForm.value.password == "" || this.registerForm.value.hobbie == ""){
+      this.successregister = false;
+      this.alert = "success";
+      this.registermsg = "Por favor ingrese todos los datos.";
+    }
+
+    if (this.registerForm.valid) {
+      this.userObj.userName = this.registerForm.value.username;
+      this.userObj.password = this.registerForm.value.password;
+      this.userObj.hobbie = this.registerForm.value.hobbie;
+      
+      this.userService.adduser(this.userObj).subscribe(
+        (data: any) => {
+          console.log(data);
+
+          this.successregister = true;
+          this.alert = "success";
+          this.registermsg = "Usuario registrado satisfactoriamente.";
+
+          this.registerForm.reset();
+        },
+        (error) => {
+          console.log(error.error);
+          if (error.status == 409) {
+            this.successregister = true;
+            this.alert = "danger";
+            this.registermsg = "Este usuario ya existe por favor ingresar otro."
+          } else {
+            this.successregister = true;
+            this.alert = "danger";
+            this.registermsg = "Error"
+          }
+
+        }
+      )
+    }
+
+  }
+
   login() {
     if(this.loginForm.value.username == "" || this.loginForm.value.password == ""){
       this.successlogin = false;
