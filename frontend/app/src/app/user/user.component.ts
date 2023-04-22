@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   chatId: any = 0;
   registerForm: FormGroup;
   loginForm: FormGroup;
+  updateForm: FormGroup;
   successregister: boolean = false;
   registermsg = "";
   alert = "";
@@ -32,6 +33,11 @@ export class UserComponent implements OnInit {
   loggedIn: boolean = false;
   loggedOut: boolean = true;
   chatbox: boolean = true;
+  public nombre = "";
+  public password = "";
+  public hobbie = "";
+  public descripcion = "";
+  public fechaNacimiento = "";
 
   logout() {
     this.loggedIn = false;
@@ -52,7 +58,10 @@ export class UserComponent implements OnInit {
     this.registerForm = new FormGroup({
       username: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required]),
-      hobbie: new FormControl("", [Validators.required])
+      hobbie: new FormControl("", [Validators.required]),
+      descripcion: new FormControl("", [Validators.required]),
+      fechaNacimiento: new FormControl("", [Validators.required]),
+      imagen: new FormControl("", [Validators.required])
     });
     this.loginForm = new FormGroup({
       username: new FormControl("", [Validators.required]),
@@ -64,7 +73,7 @@ export class UserComponent implements OnInit {
 
     setInterval(() => {
       this.userService.getAll().subscribe((data) => {
-        // console.log(data);
+        //console.log(data);
 
         this.alluser = data;
 
@@ -73,7 +82,8 @@ export class UserComponent implements OnInit {
   }
 
   adduser() {
-    if(this.registerForm.value.username == "" || this.registerForm.value.password == "" || this.registerForm.value.hobbie == ""){
+    if(this.registerForm.value.username == "" || this.registerForm.value.password == "" || this.registerForm.value.hobbie == "" 
+    || this.registerForm.value.descripcion == "" || this.registerForm.value.fechaNacimiento == ""){
       this.successregister = false;
       this.alert = "success";
       this.registermsg = "Por favor ingrese todos los datos.";
@@ -83,6 +93,9 @@ export class UserComponent implements OnInit {
       this.userObj.userName = this.registerForm.value.username;
       this.userObj.password = this.registerForm.value.password;
       this.userObj.hobbie = this.registerForm.value.hobbie;
+      this.userObj.descripcion = this.registerForm.value.descripcion;
+      this.userObj.fechaNac = this.registerForm.value.fechaNacimiento;
+      this.userObj.imagen = this.registerForm.value.imagen;
       
       this.userService.adduser(this.userObj).subscribe(
         (data: any) => {
@@ -109,30 +122,83 @@ export class UserComponent implements OnInit {
         }
       )
     }
+
+  }
+
+  consultarUser(){
+      this.userService.getUserByUsername(sessionStorage.getItem('username')).subscribe(
+        (data: any) => {
+          console.log(data);
+
+          this.nombre = data.userName;
+          this.password = data.password;
+          this.hobbie = data.hobbie;
+          this.descripcion = data.descripcion;
+          this.fechaNacimiento = data.fechaNac;
+        },
+        (error) => {
+          console.log(error.error);
+          if (error.status == 404) {
+            this.successlogin = true;
+            this.alert2 = "danger";
+            this.loginmsg = "Este usuario no esta registrado."
+          } else {
+            this.successlogin = true;
+            this.alert2 = "danger";
+            this.loginmsg = "Error"
+          }
+
+        }
+      )
+
 
   }
 
   editUser() {
-    if(this.registerForm.value.username == "" || this.registerForm.value.password == "" || this.registerForm.value.hobbie == ""){
-      this.successregister = false;
-      this.alert = "success";
-      this.registermsg = "Por favor ingrese todos los datos.";
+    if(this.registerForm.value.password == ""){
+      this.userObj.password = this.password;
+    }else {
+      this.userObj.password = this.registerForm.value.password;
     }
 
-    if (this.registerForm.valid) {
-      this.userObj.userName = this.registerForm.value.username;
-      this.userObj.password = this.registerForm.value.password;
+    if(this.registerForm.value.hobbie == ""){
+      this.userObj.hobbie = this.hobbie;
+    }else {
       this.userObj.hobbie = this.registerForm.value.hobbie;
+    }
+
+    if(this.registerForm.value.descripcion == ""){
+      this.userObj.descripcion = this.descripcion;
+    }else {
+      this.userObj.descripcion = this.registerForm.value.descripcion;
+    }
+
+    if(this.registerForm.value.fechaNacimiento == ""){
+      this.userObj.fechaNac = this.fechaNacimiento;
+    }else {
+      this.userObj.fechaNac = this.registerForm.value.fechaNacimiento;
+    }
+
+    console.log(this.fechaNacimiento,this.userObj.fechaNac);
+    
+
+    if(this.registerForm.value.imagen == ""){
+      this.userService.getUserByUsername(sessionStorage.getItem('username')).subscribe(
+      (data: any) => {
+      this.userObj.imagen = data.imagen;
+    })}
+
+      this.userObj.userName = sessionStorage.getItem('username');
       
-      this.userService.adduser(this.userObj).subscribe(
+      this.userService.updateUser(this.userObj).subscribe(
         (data: any) => {
           console.log(data);
 
           this.successregister = true;
           this.alert = "success";
-          this.registermsg = "Usuario registrado satisfactoriamente.";
+          this.registermsg = "Usuario editado satisfactoriamente.";
 
-          this.registerForm.reset();
+          this.consultarUser();
         },
         (error) => {
           console.log(error.error);
@@ -150,29 +216,21 @@ export class UserComponent implements OnInit {
       )
     }
 
-  }
-
-  deleteUser() {
-    if(this.registerForm.value.username == "" || this.registerForm.value.password == "" || this.registerForm.value.hobbie == ""){
-      this.successregister = false;
-      this.alert = "success";
-      this.registermsg = "Por favor ingrese todos los datos.";
-    }
-
-    if (this.registerForm.valid) {
-      this.userObj.userName = this.registerForm.value.username;
-      this.userObj.password = this.registerForm.value.password;
-      this.userObj.hobbie = this.registerForm.value.hobbie;
-      
-      this.userService.adduser(this.userObj).subscribe(
+  deleteUser() {    
+      this.userService.deleteUser(sessionStorage.getItem('username')).subscribe(
         (data: any) => {
           console.log(data);
 
           this.successregister = true;
           this.alert = "success";
-          this.registermsg = "Usuario registrado satisfactoriamente.";
+          this.registermsg = "Usuario eliminado satisfactoriamente.";
 
-          this.registerForm.reset();
+          this.nombre = "";
+          this.password = "";
+          this.hobbie = "";
+          this.descripcion = "";
+          this.fechaNacimiento = "";
+          this.logout();
         },
         (error) => {
           console.log(error.error);
@@ -188,7 +246,6 @@ export class UserComponent implements OnInit {
 
         }
       )
-    }
 
   }
 

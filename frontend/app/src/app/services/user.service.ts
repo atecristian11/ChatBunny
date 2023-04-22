@@ -24,4 +24,12 @@ export class UserService {
     return this.httpClient.get<User>(this.baseUrl + "/user/getbyusername/" + username)
   }
 
+  deleteUser(username: any) {
+    return this.httpClient.delete<User>(this.baseUrl + "/user/delete/" + username)
+  }
+
+  updateUser(user: User): Observable<Object> {
+    return this.httpClient.put<User>(this.baseUrl + "/user/update/", user)
+  }
+
 }

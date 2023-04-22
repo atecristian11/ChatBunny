@@ -115,7 +115,7 @@ export class ChatComponent implements OnInit {
     console.log(this.chatForm.value);
 
     // Esto llamará al método de chat de actualización cada vez que el usuario envíe el mensaje
-    this.messageObj.replymessage = this.chatForm.value.replymessage;
+    this.messageObj.replymessage = this.chatForm.value.replymessage + " 🐰";
     this.messageObj.senderEmail = this.senderEmail;
     this.chatService.updateChat(this.messageObj, this.chatId).subscribe(data => {
       console.log(data);

@@ -10,14 +10,20 @@ public class User {
     private String userName;
     private String password;
     private String hobbie;
+    private String descripcion;
+    private String fechaNac;
+    private String imagen;
 
     public User() {
     }
 
-    public User(String userName, String password, String hobbie) {
+    public User(String userName, String password, String hobbie, String descripcion, String fechaNac, String imagen) {
         this.userName = userName;
         this.password = password;
         this.hobbie = hobbie;
+        this.descripcion = descripcion;
+        this.fechaNac = fechaNac;
+        this.imagen = imagen;
     }
 
     public String getUserName() {
@@ -42,5 +48,29 @@ public class User {
 
     public void setHobbie(String hobbie) {
         this.hobbie = hobbie;
+    }
+
+    public String getdescripcion() {
+        return descripcion;
+    }
+
+    public void setdescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getfechaNac() {
+        return fechaNac;
+    }
+
+    public void setfechaNac(String fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
+    public String getimagen() {
+        return imagen;
+    }
+
+    public void setimagen(String imagen) {
+        this.imagen = imagen;
     }
 }

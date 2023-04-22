@@ -46,8 +46,8 @@
         </span>
 
         <span *ngIf="loggedIn">
-          <button class="btn btn-primary mr-sm-5 my-2 my-sm-0" type="submit" data-toggle="modal"
-            data-target="#ModalPerfil" style="font-family:'Comic Sans MS'; background-color: rgb(94, 125, 211);" (click)="limpMsg()">PERFIL DEL USUARIO</button>
+          <button class="btn btn-primary mr-sm-5 my-2 my-sm-0" data-toggle="modal"
+            data-target="#ModalPerfil" style="font-family:'Comic Sans MS'; background-color: rgb(94, 125, 211);" (click)="consultarUser()">PERFIL DEL USUARIO</button>
 
           <button class="btn btn-success mr-sm-5 my-2 my-sm-0" type="submit" routerLink="chat" *ngIf="chatbox">Mis
             Chats</button>
@@ -90,12 +90,11 @@
           </div>
           <label>Fecha de nacimiento *</label>
           <div class="form-group text-center">
-            <input type="date" class="form-control" name="bday">
+            <input type="date" class="form-control" formControlName="fechaNacimiento">
           </div>
           <label>Foto *</label>
           <div class="form-group text-center">
-            <input type="file" name="imagen" class="form-control" accept="image/*">
-            <input type="submit" value="Subir Imagen">
+            <input type="file" name="imagen" class="form-control" accept="image/*" formControlName="imagen">
           </div>
           <div class="text-center">
             <button type="submit" (click)="adduser()" class="btn btn-primary btn-sm" style="font-family:'Comic Sans MS'; background-color: blueviolet;">Registrar Usuario</button>
@@ -105,56 +104,6 @@
             </div>
             <div class="small alert alert-{{alert}} feild" role="alert" style="color: red;" *ngIf="successregister == false">{{registermsg}}
             </div>
-          </div>
-        </form>
-        <!-- ========================= -->
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal para el perfil -->
-
-<div class="modal fade" id="ModalPerfil" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">DATOS DEL PERFIL</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- ========================= -->
-        <form [formGroup]="registerForm">
-          <label>Foto de Perfil</label>
-          <div class="form-group text-center">
-            <img src="icono1.png" class="image">
-          </div>
-          <label>Nombre Usuario</label>
-          <div class="form-group text-center">
-            <input type="text" class="form-control" formControlName="username" id="exampleInputEmail1"
-              aria-describedby="emailHelp">
-          </div>
-          <label>Hobbies</label>
-          <div class="form-group text-center">
-            <input type="text" class="form-control" formControlName="hobbie" id="hobbie1" aria-describedby="emailHelp">
-          </div>
-          <label>Descripción Personal</label>
-          <div class="form-group text-center">
-            <input type="text" class="form-control" formControlName="descripcion" id="descripcion1" aria-describedby="emailHelp">
-          </div>
-          <label>Fecha de nacimiento</label>
-          <div class="form-group text-center">
-            <input type="date" class="form-control" name="bday">
-          </div>
-          <div class="text-center">
-            <button type="submit" (click)="editUser()" class="btn btn-primary btn-sm" style="font-family:'Comic Sans MS'; background-color: rgb(126, 136, 230);">Editar Usuario</button>
-          </div>
-          <br>
-          <div class="text-center">
-            <button type="submit" (click)="deleteUser()" class="btn btn-primary btn-sm" style="font-family:'Comic Sans MS'; background-color: rgb(219, 118, 118);">Eliminar Usuario</button>
           </div>
         </form>
         <!-- ========================= -->
@@ -195,6 +144,59 @@
             </div>
             <div class="small alert alert-{{alert2}} feild" role="alert" style="color: red;" *ngIf="successlogin == false">{{loginmsg}}
             </div>
+          </div>
+        </form>
+        <!-- ========================= -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para el perfil -->
+
+<div class="modal fade" id="ModalPerfil" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">DATOS DEL PERFIL</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- ========================= -->
+        <form [formGroup]="registerForm">
+          <label>Foto de Perfil</label>
+          <div class="form-group text-center">
+            <img src="icono1.png" class="image">
+          </div>
+          <label>Nombre Usuario</label>
+            <label class="form-control text-left">{{this.nombre}}</label>
+          <label>Contraseña</label>
+          <div class="form-group text-center">
+            <input type="password" class="form-control" formControlName="password" id="password1" aria-describedby="emailHelp" placeholder="{{this.password}}">
+          </div>
+          <label>Hobbies</label>
+          <div class="form-group text-center">
+            <input type="text" class="form-control" formControlName="hobbie" id="hobbie1" aria-describedby="emailHelp" placeholder="{{this.hobbie}}">
+          </div>
+          <label>Descripción Personal</label>
+          <div class="form-group text-center">
+            <input type="text" class="form-control" formControlName="descripcion" id="descripcion1" aria-describedby="emailHelp" placeholder="{{this.descripcion}}">
+          </div>
+          <label>Fecha de nacimiento</label>
+          <div class="form-group text-center">
+            <input type="date" class="form-control" name="bday" formControlName="fechaNacimiento" value="{{this.fechaNacimiento}}">
+          </div>
+          <div class="text-center">
+            <button type="submit" (click)="editUser()" class="btn btn-primary btn-sm" style="font-family:'Comic Sans MS'; background-color: rgb(126, 136, 230);">Editar Usuario</button>
+          </div>
+          <br>
+          <div class="text-center">
+            <button type="submit" (click)="deleteUser()" class="btn btn-primary btn-sm" style="font-family:'Comic Sans MS'; background-color: rgb(219, 118, 118);">Eliminar Usuario</button>
+          </div>
+          <div class="small alert alert-{{alert}} feild" role="alert" *ngIf="successregister == true" style="color: black; ">{{registermsg}}
           </div>
         </form>
         <!-- ========================= -->

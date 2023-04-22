@@ -38,6 +38,16 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<User> delete(@PathVariable String username) throws IOException {
+        return new ResponseEntity<User>(userService.deleteUser(username), HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<User> update(@RequestBody User user) throws IOException {
+        return new ResponseEntity<User>(userService.updateUser(user), HttpStatus.OK);
+    }
+
     @GetMapping("/getbyusername/{username}")
     public ResponseEntity<User> getUserByUserName(@PathVariable String username) throws IOException {
         try{
