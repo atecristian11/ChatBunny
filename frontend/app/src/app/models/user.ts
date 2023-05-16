@@ -5,6 +5,7 @@ export class User {
     descripcion:string;
     fechaNac:String;
     imagen:String;
+    emogi: string;
 
     constructor(){}
 }
