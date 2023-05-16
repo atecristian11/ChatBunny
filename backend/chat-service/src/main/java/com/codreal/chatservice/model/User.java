@@ -13,17 +13,19 @@ public class User {
     private String descripcion;
     private String fechaNac;
     private String imagen;
+    private String emogi;
 
     public User() {
     }
 
-    public User(String userName, String password, String hobbie, String descripcion, String fechaNac, String imagen) {
+    public User(String userName, String password, String hobbie, String descripcion, String fechaNac, String imagen, String emogi) {
         this.userName = userName;
         this.password = password;
         this.hobbie = hobbie;
         this.descripcion = descripcion;
         this.fechaNac = fechaNac;
         this.imagen = imagen;
+        this.emogi = emogi;
     }
 
     public String getUserName() {
@@ -72,5 +74,13 @@ public class User {
 
     public void setimagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getemogi() {
+        return emogi;
+    }
+
+    public void setemogi(String emogi) {
+        this.emogi = emogi;
     }
 }

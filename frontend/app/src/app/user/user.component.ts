@@ -38,6 +38,11 @@ export class UserComponent implements OnInit {
   public hobbie = "";
   public descripcion = "";
   public fechaNacimiento = "";
+  public imagen = "";
+  image: boolean = false;
+  image2: boolean = false;
+  image3: boolean = false;
+  image4: boolean = false;
 
   logout() {
     this.loggedIn = false;
@@ -61,7 +66,8 @@ export class UserComponent implements OnInit {
       hobbie: new FormControl("", [Validators.required]),
       descripcion: new FormControl("", [Validators.required]),
       fechaNacimiento: new FormControl("", [Validators.required]),
-      imagen: new FormControl("", [Validators.required])
+      imagen: new FormControl("", [Validators.required]),
+      emogi: new FormControl("", [Validators.required]),
     });
     this.loginForm = new FormGroup({
       username: new FormControl("", [Validators.required]),
@@ -95,7 +101,10 @@ export class UserComponent implements OnInit {
       this.userObj.hobbie = this.registerForm.value.hobbie;
       this.userObj.descripcion = this.registerForm.value.descripcion;
       this.userObj.fechaNac = this.registerForm.value.fechaNacimiento;
-      this.userObj.imagen = this.registerForm.value.imagen;
+      this.userObj.imagen = this.registerForm.value.imagen.toString();
+      this.userObj.emogi = this.registerForm.value.emogi;
+      console.log(this.registerForm.value.imagen.toString());
+      
       
       this.userService.adduser(this.userObj).subscribe(
         (data: any) => {
@@ -128,13 +137,42 @@ export class UserComponent implements OnInit {
   consultarUser(){
       this.userService.getUserByUsername(sessionStorage.getItem('username')).subscribe(
         (data: any) => {
-          console.log(data);
+          //console.log(data);
 
           this.nombre = data.userName;
           this.password = data.password;
           this.hobbie = data.hobbie;
           this.descripcion = data.descripcion;
           this.fechaNacimiento = data.fechaNac;
+          this.imagen = data.imagen;
+
+          if (this.imagen == "3") {
+            this.image = true
+            this.image2 = false
+            this.image3 = false
+            this.image4 = false
+          }
+
+          if (this.imagen == "2") {
+            this.image = false
+            this.image2 = true
+            this.image3 = false
+            this.image4 = false
+          }
+
+          if (this.imagen == "1") {
+            this.image = false
+            this.image2 = false
+            this.image3 = true
+            this.image4 = false
+          }
+
+          if (this.imagen == "4") {
+            this.image = false
+            this.image2 = false
+            this.image3 = false
+            this.image4 = true
+          }
         },
         (error) => {
           console.log(error.error);
@@ -155,32 +193,29 @@ export class UserComponent implements OnInit {
   }
 
   editUser() {
-    if(this.registerForm.value.password == ""){
+    if(this.registerForm.value.password == "" || this.registerForm.value.password == null){
       this.userObj.password = this.password;
     }else {
       this.userObj.password = this.registerForm.value.password;
-    }
+    }    
 
-    if(this.registerForm.value.hobbie == ""){
+    if(this.registerForm.value.hobbie == "" || this.registerForm.value.hobbie == null){
       this.userObj.hobbie = this.hobbie;
     }else {
       this.userObj.hobbie = this.registerForm.value.hobbie;
     }
 
-    if(this.registerForm.value.descripcion == ""){
+    if(this.registerForm.value.descripcion == "" || this.registerForm.value.descripcion == null){
       this.userObj.descripcion = this.descripcion;
     }else {
       this.userObj.descripcion = this.registerForm.value.descripcion;
     }
 
-    if(this.registerForm.value.fechaNacimiento == ""){
+    if(this.registerForm.value.fechaNacimiento == "" || this.registerForm.value.fechaNacimiento == null){
       this.userObj.fechaNac = this.fechaNacimiento;
     }else {
       this.userObj.fechaNac = this.registerForm.value.fechaNacimiento;
     }
-
-    console.log(this.fechaNacimiento,this.userObj.fechaNac);
-    
 
     if(this.registerForm.value.imagen == ""){
       this.userService.getUserByUsername(sessionStorage.getItem('username')).subscribe(
@@ -267,6 +302,7 @@ export class UserComponent implements OnInit {
             this.loginmsg = "Ingreso Satisfactorio";
 
             sessionStorage.setItem("username", this.loginForm.value.username);
+            sessionStorage.setItem("emogi", data.emogi);
             this.check = this.loginForm.value.username;
             this.loginForm.reset();
 

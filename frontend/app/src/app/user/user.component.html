@@ -92,9 +92,32 @@
           <div class="form-group text-center">
             <input type="date" class="form-control" formControlName="fechaNacimiento">
           </div>
-          <label>Foto *</label>
+          <label>Emoji *</label>
           <div class="form-group text-center">
-            <input type="file" name="imagen" class="form-control" accept="image/*" formControlName="imagen">
+            <select class="form-control" formControlName="emogi"> 
+              <option value="🐰">🐰</option>
+              <option value="🐇">🐇</option>
+              <option value="🐅">🐅</option>
+              <option value="🐨">🐨</option>
+              <option value="🐒">🐒</option>
+              <option value="🐈">🐈</option>
+              <option value="🦁">🦁</option>
+            </select>
+          </div>
+          <label>Foto *</label>
+          <div class="form-group text-center" >
+            <select
+            class="form-control"
+            multiple
+            style="text-align: center; background-color:  #eec4e8;"
+            formControlName="imagen"
+          >
+            <option value="1"><img src="fondo.jpg" style="height: 30px; width: 100px;"></option>
+            <option value="2"><img src="icono2.png" style="height: 30px; width: 100px;"></option>
+            <option value="3"><img src="conejos-fondo-inicio.jpg" style="height: 30px; width: 100px;"></option>
+            <option value="4"><img src="icono1.png" style="height: 30px; width: 100px;"></option>
+
+          </select>
           </div>
           <div class="text-center">
             <button type="submit" (click)="adduser()" class="btn btn-primary btn-sm" style="font-family:'Comic Sans MS'; background-color: blueviolet;">Registrar Usuario</button>
@@ -169,7 +192,10 @@
         <form [formGroup]="registerForm">
           <label>Foto de Perfil</label>
           <div class="form-group text-center">
-            <img src="icono1.png" class="image">
+            <img src="icono1.png" class="image" *ngIf="image == true">
+            <img src="icono2.png" class="image" *ngIf="image2 == true">
+            <img src="conejos-fondo-inicio.jpg" class="image" *ngIf="image3 == true">
+            <img src="fondo.jpg" class="image" *ngIf="image4 == true">
           </div>
           <label>Nombre Usuario</label>
             <label class="form-control text-left">{{this.nombre}}</label>

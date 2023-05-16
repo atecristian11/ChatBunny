@@ -91,7 +91,7 @@ export class ChatComponent implements OnInit {
 
     // Para verificar la sala de chat por ambos correos electrónicos, si está presente, le dará la identificación de chat en sessionStorage
     this.chatService.getChatByFirstUserNameAndSecondUserName(event, event1).subscribe(data => {
-      // console.log(data);
+      console.log(data);
       this.chatData = data;
       this.chatId = this.chatData[0].chatId;
       console.log(this.chatId);
@@ -115,7 +115,7 @@ export class ChatComponent implements OnInit {
     console.log(this.chatForm.value);
 
     // Esto llamará al método de chat de actualización cada vez que el usuario envíe el mensaje
-    this.messageObj.replymessage = this.chatForm.value.replymessage + " 🐰";
+    this.messageObj.replymessage = this.chatForm.value.replymessage + " " + sessionStorage.getItem('emogi');
     this.messageObj.senderEmail = this.senderEmail;
     this.chatService.updateChat(this.messageObj, this.chatId).subscribe(data => {
       console.log(data);
